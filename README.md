@@ -15,25 +15,31 @@ Construye un agente de soporte al cliente con herramientas reales usando Strands
 
 ```bash
 git clone https://github.com/ramtoearth/strands-agents-workshop.git
-cd strands-agents-workshop/shopfast
+cd strands-agents-workshop/
 ```
 
 ### 2. Crea un entorno virtual e instala dependencias
 
 ```bash
+cd shopfast/
 python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 3. Inicializa la base de datos y arranca la app
+### 3. Inicializa la base de datos
 
 ```bash
 python seed_db.py
-python app.py
 ```
 
+### 4. Arranca la App
+
 Abre http://localhost:8000
+
+```bash
+python app.py
+```
 
 ## Configura tu API key
 
@@ -48,10 +54,10 @@ export ANTHROPIC_API_KEY="tu-key-aquí"
 | Paso | Branch | Qué construyes |
 |------|--------|----------------|
 | 0 | `main` | App base (punto de partida) |
-| 1 | `step/01-basic-agent` | Agente conectado al chat, sin tools |
-| 2 | `step/02-read-tools` | Tools de consulta (pedidos, clientes) |
-| 3 | `step/03-write-tools` | Tool de acción (procesar reembolsos) |
-| 4 | `step/04-guardrails` | Reglas de negocio en el system prompt |
+| 1 | [step/01-basic-agent](./prompts/01-basic-agent.md) | Agente conectado al chat, sin tools |
+| 2 | [step/02-read-tools](./prompts/02-read-tools) | Tools de consulta (pedidos, clientes) |
+| 3 | [step/03-write-tools](./prompts/03-write-tools) | Tool de acción (procesar reembolsos) |
+| 4 | [step/04-guardrails](./prompts/04-guardrails) | Reglas de negocio en el system prompt |
 
 ## ¿Te perdiste en un paso?
 
