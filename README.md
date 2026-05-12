@@ -11,12 +11,24 @@ Construye un agente de soporte al cliente con herramientas reales usando Strands
 
 ## Setup rápido
 
+### 1. Clona el repositorio
+
 ```bash
-git clone <repo-url>
-cd workshop-rbr/shopfast
+git clone https://github.com/ramtoearth/strands-agents-workshop.git
+cd strands-agents-workshop/shopfast
+```
+
+### 2. Crea un entorno virtual e instala dependencias
+
+```bash
 python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
+```
+
+### 3. Inicializa la base de datos y arranca la app
+
+```bash
 python seed_db.py
 python app.py
 ```
