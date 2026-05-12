@@ -7,6 +7,7 @@ from fastapi.templating import Jinja2Templates
 from pathlib import Path
 
 import database
+from agent import invoke_agent
 
 app = FastAPI(title="ShopFast Soporte")
 
@@ -76,11 +77,9 @@ async def chat_send(request: Request, message: str = Form(...)):
     # Agregar mensaje del usuario
     messages.append({"role": "user", "content": message})
 
-    # Respuesta placeholder del agente
-    messages.append({
-        "role": "assistant",
-        "content": "El agente aún no está conectado. Aquí se integrará Strands Agents.",
-    })
+    # Llamar al agente con el mensaje y el historial
+    response = invoke_agent(message, messages[:-1])
+    messages.append({"role": "assistant", "content": response})
 
     return templates.TemplateResponse(request, "chat.html", {
         "messages": messages,

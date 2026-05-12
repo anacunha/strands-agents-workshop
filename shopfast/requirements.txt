@@ -2,3 +2,6 @@ fastapi
 uvicorn[standard]
 jinja2
 python-multipart
+strands-agents
+strands-agents-tools
+openai
