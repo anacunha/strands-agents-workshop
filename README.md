@@ -18,22 +18,27 @@ git clone https://github.com/ramtoearth/strands-agents-workshop.git
 cd strands-agents-workshop/
 ```
 
-### 2. Crea un entorno virtual e instala dependencias
+### 2. Ve a la carpeta del proyecto
 
 ```bash
 cd shopfast/
+```
+
+### 3. Crea un entorno virtual e instala dependencias
+
+```bash
 python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 3. Inicializa la base de datos
+### 4. Inicializa la base de datos
 
 ```bash
 python seed_db.py
 ```
 
-### 4. Arranca la App
+### 5. Arranca la App
 
 Abre http://localhost:8000
 
