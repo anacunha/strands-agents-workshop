@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Pedido {{ order.id }}{% endblock %}
+
+{% block content %}
+<h1>Pedido {{ order.id }}</h1>
+
+<div class="grid">
+    <article>
+        <header>Información del Pedido</header>
+        <p><strong>Estado:</strong> <span class="badge badge-{{ order.status }}">{{ order.status }}</span></p>
+        <p><strong>Total:</strong> ${{ "%.2f"|format(order.total) }}</p>
+        {% if order.tracking_number %}
+        <p><strong>Número de rastreo:</strong> {{ order.tracking_number }}</p>
+        {% endif %}
+        <p><strong>Creado:</strong> {{ order.created_at[:10] }}</p>
+        <p><strong>Actualizado:</strong> {{ order.updated_at[:10] }}</p>
+    </article>
+
+    <article>
+        <header>Información del Cliente</header>
+        <p><strong>Nombre:</strong> {{ order.customer_name }}</p>
+        <p><strong>Email:</strong> {{ order.customer_email }}</p>
+        <p><strong>Teléfono:</strong> {{ order.customer_phone }}</p>
+    </article>
+</div>
+
+<h2>Artículos</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in order["items"] %}
+        <tr>
+            <td>{{ item.nombre }}</td>
+            <td>{{ item.cantidad }}</td>
+            <td>${{ "%.2f"|format(item.precio) }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="/orders" role="button" class="outline">&larr; Volver a pedidos</a>
+{% endblock %}

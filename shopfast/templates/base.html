@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}ShopFast{% endblock %} - Soporte</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header class="container">
+        <nav>
+            <ul>
+                <li><strong>ShopFast</strong> <small>Soporte</small></li>
+            </ul>
+            <ul>
+                <li><a href="/">Dashboard</a></li>
+                <li><a href="/orders">Pedidos</a></li>
+                <li><a href="/customers">Clientes</a></li>
+                <li><a href="/chat">Chat de Soporte</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="container">
+        <small>ShopFast Soporte &copy; 2026 — Panel interno de atención al cliente</small>
+    </footer>
+</body>
+</html>

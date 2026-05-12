@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Pedidos{% endblock %}
+
+{% block content %}
+<h1>Pedidos</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Cliente</th>
+            <th>Estado</th>
+            <th>Total</th>
+            <th>Fecha</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in orders %}
+        <tr onclick="window.location='/orders/{{ order.id }}'" style="cursor: pointer;">
+            <td><a href="/orders/{{ order.id }}">{{ order.id }}</a></td>
+            <td>{{ order.customer_name }}</td>
+            <td><span class="badge badge-{{ order.status }}">{{ order.status }}</span></td>
+            <td>${{ "%.2f"|format(order.total) }}</td>
+            <td>{{ order.created_at[:10] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

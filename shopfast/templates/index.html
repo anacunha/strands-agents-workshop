@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<h1>Dashboard de Soporte</h1>
+
+<div class="grid">
+    <article>
+        <header>Total de Pedidos</header>
+        <p class="stat-number">{{ total_orders }}</p>
+    </article>
+    <article>
+        <header>Pedidos Pendientes</header>
+        <p class="stat-number">{{ pending_orders }}</p>
+    </article>
+    <article>
+        <header>Reembolsos Pendientes</header>
+        <p class="stat-number">{{ pending_refunds }}</p>
+    </article>
+</div>
+
+<h2>Pedidos Recientes</h2>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Cliente</th>
+            <th>Estado</th>
+            <th>Total</th>
+            <th>Fecha</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in recent_orders %}
+        <tr>
+            <td><a href="/orders/{{ order.id }}">{{ order.id }}</a></td>
+            <td>{{ order.customer_name }}</td>
+            <td><span class="badge badge-{{ order.status }}">{{ order.status }}</span></td>
+            <td>${{ "%.2f"|format(order.total) }}</td>
+            <td>{{ order.created_at[:10] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
