@@ -5,7 +5,6 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pathlib import Path
-from typing import Optional
 
 import database
 
@@ -63,15 +62,16 @@ async def chat_page(request: Request):
 
 
 @app.post("/chat", response_class=HTMLResponse)
-async def chat_send(request: Request, message: str = Form(...), history: Optional[list[str]] = Form(None)):
+async def chat_send(request: Request, message: str = Form(...)):
     """Procesa un mensaje del chat de soporte (placeholder)."""
     messages = []
 
     # Reconstruir historial desde campos ocultos
-    if history:
-        for entry in history:
-            role, content = entry.split(":", 1)
-            messages.append({"role": role, "content": content})
+    form_data = await request.form()
+    history_entries = form_data.getlist("history")
+    for entry in history_entries:
+        role, content = entry.split(":", 1)
+        messages.append({"role": role, "content": content})
 
     # Agregar mensaje del usuario
     messages.append({"role": "user", "content": message})
