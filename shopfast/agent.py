@@ -2,7 +2,7 @@
 
 from strands import Agent
 from strands.models.openai import OpenAIModel
-from tools import get_order_status, get_customer_orders
+from tools import get_order_status, get_customer_orders, process_refund
 
 model = OpenAIModel(model_id="gpt-4o-mini")
 
@@ -25,9 +25,14 @@ def invoke_agent(user_message: str, conversation_history: list[dict]) -> str:
 
     agent = Agent(
         model=model,
-        tools=[get_order_status, get_customer_orders],
+        tools=[get_order_status, get_customer_orders, process_refund],
         system_prompt=SYSTEM_PROMPT,
+        callback_handler=None,
     )
 
     result = agent(context)
-    return str(result)
+
+    # Extraer el texto de la respuesta
+    content = result.message.get("content", [])
+    texts = [block["text"] for block in content if "text" in block]
+    return "".join(texts)
