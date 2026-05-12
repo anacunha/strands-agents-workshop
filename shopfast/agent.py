@@ -2,6 +2,7 @@
 
 from strands import Agent
 from strands.models.openai import OpenAIModel
+from tools import get_order_status, get_customer_orders
 
 model = OpenAIModel(model_id="gpt-4o-mini")
 
@@ -24,6 +25,7 @@ def invoke_agent(user_message: str, conversation_history: list[dict]) -> str:
 
     agent = Agent(
         model=model,
+        tools=[get_order_status, get_customer_orders],
         system_prompt=SYSTEM_PROMPT,
     )
 
