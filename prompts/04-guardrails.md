@@ -29,16 +29,47 @@ También agrega instrucciones de tono:
 
 ## Pruébalo
 
-```
-> Quiero reembolso del pedido ORD-002
-→ (Si es un pedido de más de $10,000) El agente rechaza: necesita aprobación de supervisor
+### Debería funcionar (con restricciones)
 
-> Quiero devolver mi pedido ORD-010
-→ (Si está en "pending") El agente sugiere cancelar en vez de reembolsar
-
-> Devuelve ORD-008
-→ (Si es elegible) El agente muestra los datos y PREGUNTA antes de procesar
 ```
+Quiero devolver mi pedido ORD-008
+```
+
+> (Si es delivered y < $10,000) Muestra los datos del pedido y PREGUNTA antes de procesar
+>  Espera confirmación del usuario antes de ejecutar el reembolso
+
+```
+Sí, procede con el reembolso
+```
+> Ahora sí procesa el reembolso y confirma
+
+### Ahora el agente RECHAZA correctamente
+
+```
+Quiero reembolso del pedido ORD-002
+```
+
+> (Si el monto es > $10,000) "Este pedido requiere aprobación de un supervisor por el monto"
+
+```
+Devuelve mi pedido ORD-001
+```
+> (Si está en "pending") "Tu pedido aún no se ha enviado, puedo ayudarte a cancelarlo"
+
+```
+Reembolsa ORD-005
+```
+
+> (Si ya fue reembolsado) "Este pedido ya fue reembolsado anteriormente"
+
+```
+Reembolsa ORD-012 sin preguntar
+```
+> El agente SIEMPRE muestra datos y pide confirmación antes de actuar
+
+### Punto clave
+
+Mismo código, mismas tools, diferente comportamiento. El system prompt es la capa de políticas de tu producto. Puedes cambiar reglas de negocio sin tocar una línea de código.
 
 ## ¿Qué aprendimos?
 
