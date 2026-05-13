@@ -1,15 +1,14 @@
 # Workshop: Agentes de IA como feature de tu producto
 
-Construye un agente de soporte al cliente con herramientas reales usando Strands Agents y vibe coding.
+Construye un agente de soporte al cliente con herramientas reales usando Strands Agents.
 
 ## Requisitos previos
 
 - Python 3.10+
-- Una API key de OpenAI o Anthropic
-- Tu agente de código favorito (Cursor, Claude Code, Kiro, GitHub Copilot...)
+- Una API key de OpenAI, Anthropic, o [Ollama](https://ollama.com/) instalado localmente
 - Git
 
-## Setup rápido
+## Setup
 
 ### 1. Clona el repositorio
 
@@ -38,55 +37,203 @@ pip install -r requirements.txt
 python seed_db.py
 ```
 
-### 5. Arranca la App
+### 5. Configura tu API key
 
-Abre http://localhost:8000
+```bash
+# OpenAI
+export OPENAI_API_KEY="tu-key"
+
+# Anthropic
+export ANTHROPIC_API_KEY="tu-key"
+
+# Ollama (sin key, solo asegúrate de que esté corriendo)
+ollama serve
+```
+
+### 6. Arranca la app
 
 ```bash
 python app.py
 ```
 
-## Configura tu API key
+Abre http://localhost:8000
 
-```bash
-export OPENAI_API_KEY="tu-key-aquí"
-# o
-export ANTHROPIC_API_KEY="tu-key-aquí"
-```
+---
 
 ## Pasos del workshop
 
-| Paso | Branch | Qué construyes |
-|------|--------|----------------|
+Cada paso es un branch. Cambia de branch para avanzar:
+
+| Paso | Comando | Qué se agrega |
+|------|---------|---------------|
 | 0 | `main` | App base (punto de partida) |
-| 1 | [step/01-basic-agent](./prompts/01-basic-agent.md) | Agente conectado al chat, sin tools |
-| 2 | [step/02-read-tools](./prompts/02-read-tools) | Tools de consulta (pedidos, clientes) |
-| 3 | [step/03-write-tools](./prompts/03-write-tools) | Tool de acción (procesar reembolsos) |
-| 4 | [step/04-guardrails](./prompts/04-guardrails) | Reglas de negocio en el system prompt |
+| 1 | `git checkout step/01-basic-agent` | Agente conectado al chat, sin tools |
+| 2 | `git checkout step/02-read-tools` | Tools de consulta (pedidos, clientes) |
+| 3 | `git checkout step/03-write-tools` | Tool de acción (procesar reembolsos) |
+| 4 | `git checkout step/04-guardrails` | Reglas de negocio en el system prompt |
 
-## ¿Te perdiste en un paso?
+> Después de cambiar de branch, reinstala dependencias si es necesario: `pip install -r requirements.txt`
+
+---
+
+## Paso 0: La app base (main)
+
+ShopFast es un panel de soporte al cliente con:
+- Dashboard con métricas
+- Lista de pedidos y detalle
+- Lista de clientes
+- **Chat de soporte** → actualmente devuelve un placeholder
+
+---
+
+## Paso 1: Agente básico
 
 ```bash
-git checkout step/02-read-tools  # Salta al paso 2 completo
+git checkout step/01-basic-agent
+pip install -r requirements.txt
+python app.py
 ```
 
-## Los prompts
+### Qué cambió
 
-Cada paso tiene un prompt detallado en la carpeta `prompts/`. Copia el prompt, pégalo en tu agente de código, y deja que genere la implementación.
+- **Nuevo: `agent.py`** — Configura un agente de Strands con OpenAI como modelo
+- **Modificado: `app.py`** — El endpoint POST /chat ahora llama al agente
+- **Modificado: `requirements.txt`** — Agrega strands-agents, openai
 
-## ¿No quieres usar API keys?
+### Pruébalo
 
-Strands soporta Ollama para correr modelos localmente sin costo:
+```
+Hola, ¿me puedes ayudar?
+```
+
+**Punto clave:** Sin herramientas, el agente es solo un chatbot. No puede acceder a los datos de tu producto.
+
+### ¿Usas otro model provider?
+
+El workshop usa OpenAI por default. Si prefieres otro provider, usa este prompt en tu agente de código:
+
+```
+Cambia el model provider en shopfast/agent.py.
+En vez de OpenAIModel, usa [AnthropicModel / OllamaModel].
+Actualiza el import y el requirements.txt si es necesario.
+La API key se lee de la variable de entorno correspondiente.
+Para Ollama usa model_id="llama3.2:3b" y host="http://localhost:11434".
+```
+
+Providers soportados: [Strands Model Providers](https://strandsagents.com/docs/user-guide/concepts/model-providers/)
+
+---
+
+## Paso 2: Tools de consulta
 
 ```bash
-pip install ollama
-ollama pull llama3.2:3b
+git checkout step/02-read-tools
+python app.py
 ```
 
-Cambia `OpenAIModel` por `OllamaModel` en agent.py.
+### Qué cambió
+
+- **Nuevo: `tools.py`** — Dos herramientas: `get_order_status` y `get_customer_orders`
+- **Modificado: `agent.py`** — Importa y registra las tools
+
+### Pruébalo
+
+```
+¿Cuál es el estado de mi pedido ORD-001?
+```
+
+```
+Soy maria.garcia@email.com, ¿qué pedidos tengo?
+```
+
+```
+Quiero devolver mi pedido ORD-005
+```
+
+**Punto clave:** El modelo decide cuándo usar cada herramienta basándose en el docstring. Tú no escribes if/else.
+
+---
+
+## Paso 3: Tool de acción
+
+```bash
+git checkout step/03-write-tools
+python seed_db.py
+python app.py
+```
+
+> Regeneramos la DB para tener datos limpios.
+
+### Qué cambió
+
+- **Modificado: `tools.py`** — Nueva herramienta: `process_refund`
+- **Modificado: `agent.py`** — Registra la nueva tool
+
+### Pruébalo
+
+```
+Quiero devolver mi pedido ORD-005, llegó dañado
+```
+
+> (Ve a http://localhost:8000/orders/ORD-005)
+
+```
+Reembolsa ORD-005 otra vez
+```
+
+```
+Reembolsa TODOS mis pedidos
+```
+
+> ⚠️ Podría intentar hacerlo sin cuestionar (no hay reglas de negocio aún)
+
+**Punto clave:** El agente encadenó tools: primero consultó, luego actuó. Pero sin restricciones, hace todo lo que le pidas.
+
+---
+
+## Paso 4: Guardrails
+
+```bash
+git checkout step/04-guardrails
+python seed_db.py
+python app.py
+```
+
+### Qué cambió
+
+- **Modificado: `agent.py`** — System prompt expandido con reglas de negocio
+
+### Pruébalo
+
+```
+Quiero devolver mi pedido ORD-008
+```
+```
+> Quiero reembolso del pedido ORD-002
+```
+
+>  Rechaza si monto > $10,000: "necesita aprobación de supervisor"
+
+```
+> Devuelve mi pedido ORD-001
+```
+
+> Rechaza si está en "pending": sugiere cancelar
+
+```
+> Reembolsa ORD-005 sin preguntar
+```
+
+> Siempre pide confirmación antes de actuar
+
+**Punto clave:** Mismo código, mismas tools, diferente comportamiento. El system prompt son las políticas de tu producto.
+
+---
+
 
 ## Recursos
 
 - [Strands Agents](https://strandsagents.com/)
+- [Strands Model Providers](https://strandsagents.com/docs/user-guide/concepts/model-providers/)
 - [Ollama](https://ollama.com/)
 - [FastAPI](https://fastapi.tiangolo.com/)
