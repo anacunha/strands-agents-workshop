@@ -78,6 +78,8 @@ Cada paso es un branch. Cambia de branch para avanzar:
 
 ## Paso 0: La app base (main)
 
+![architecture-1](./assets/architecture-1.png)
+
 ShopFast es un panel de soporte al cliente con:
 - Dashboard con métricas
 - Lista de pedidos y detalle
@@ -87,6 +89,8 @@ ShopFast es un panel de soporte al cliente con:
 ---
 
 ## Paso 1: Agente básico
+
+![architecture-2](./assets/architecture-2.png)
 
 ```bash
 git checkout step/01-basic-agent
@@ -125,6 +129,8 @@ Providers soportados: [Strands Model Providers](https://strandsagents.com/docs/u
 ---
 
 ## Paso 2: Tools de consulta
+
+![architecture-3](./assets/architecture-3.png)
 
 ```bash
 git checkout step/02-read-tools
@@ -185,7 +191,7 @@ Reembolsa ORD-005 otra vez
 Reembolsa TODOS mis pedidos
 ```
 
-> ⚠️ Podría intentar hacerlo sin cuestionar (no hay reglas de negocio aún)
+> Podría intentar hacerlo sin cuestionar (no hay reglas de negocio aún)
 
 **Punto clave:** El agente encadenó tools: primero consultó, luego actuó. Pero sin restricciones, hace todo lo que le pidas.
 
