@@ -66,13 +66,37 @@ python app.py
 
 Ve a http://localhost:8000/chat y prueba:
 
-```
-> Hola, ¿me puedes ayudar?
-→ Respuesta amable del agente
+### Lo que sí debería funcionar
 
-> ¿Dónde está mi pedido ORD-001?
-→ El agente inventa o dice que no tiene acceso a esa información
 ```
+Hola, ¿me puedes ayudar con un pedido?
+```
+
+```
+¿Qué es ShopFast?
+```
+
+```
+¿Cuál es su política de devoluciones?
+```
+
+### Lo que no debería poder hacer
+
+```
+¿Cuál es el estado de mi pedido ORD-001?
+```
+
+```
+Soy maria.garcia@email.com, ¿qué pedidos tengo?
+```
+
+```
+Quiero devolver mi pedido ORD-005
+```
+
+### Punto clave
+
+El agente es amable pero inútil. No puede hacer nada real por el usuario porque no tiene acceso a los datos del producto.
 
 ## ¿Qué aprendimos?
 
