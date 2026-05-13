@@ -215,19 +215,19 @@ python app.py
 Quiero devolver mi pedido ORD-008
 ```
 ```
-> Quiero reembolso del pedido ORD-002
+Quiero reembolso del pedido ORD-002
 ```
 
 >  Rechaza si monto > $10,000: "necesita aprobación de supervisor"
 
 ```
-> Devuelve mi pedido ORD-001
+Devuelve mi pedido ORD-001
 ```
 
 > Rechaza si está en "pending": sugiere cancelar
 
 ```
-> Reembolsa ORD-005 sin preguntar
+Reembolsa ORD-005 sin preguntar
 ```
 
 > Siempre pide confirmación antes de actuar
