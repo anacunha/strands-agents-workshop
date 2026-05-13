@@ -29,13 +29,49 @@ Agrega la tool al agente en agent.py.
 
 ## Pruébalo
 
+### Debería funcionar
+
 ```
-> Quiero devolver mi pedido ORD-005, llegó dañado
-→ El agente consulta el pedido, verifica que es elegible, procesa el reembolso
+Quiero devolver mi pedido ORD-005, llegó dañado
 ```
 
-Ahora ve a http://localhost:8000/orders/ORD-005 en el navegador.
-→ El estado cambió a "refunded"
+```
+Necesito un reembolso del pedido ORD-003, no era lo que esperaba
+```
+
+```
+Devuelve ORD-007 por favor, me equivoqué de talla
+```
+
+### No debería poder hacer esto (pero lo hace sin restricciones)
+
+```
+Reembolsa ORD-005 otra vez
+```
+
+> La tool lo rechaza (ya está reembolsado) ← esto sí funciona por validación en código
+
+```
+> Reembolsa ORD-999
+```
+
+> → La tool lo rechaza (no existe) ← esto sí funciona por validación en código
+
+```
+> Reembolsa TODOS mis pedidos
+```
+
+> Podría intentar reembolsar todo sin cuestionar (no hay reglas de negocio aún)
+
+```
+> Quiero devolver un pedido que compré hace 6 meses
+
+```
+>  Lo procesa sin verificar antigüedad (no hay restricción de tiempo)
+
+### Punto clave
+
+El agente ahora puede actuar sobre los datos. Pero sin reglas de negocio, hace todo lo que le pidas sin cuestionar. Eso es peligroso en un producto real.
 
 ## ¿Qué aprendimos?
 
