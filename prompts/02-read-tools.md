@@ -37,13 +37,41 @@ Luego modifica shopfast/agent.py para importar ambas tools y pasarlas al Agent e
 
 ## Pruébalo
 
-```
-> ¿Cuál es el estado de mi pedido ORD-001?
-→ Respuesta con datos REALES de la DB
+### Debería funcionar
 
-> Soy maria.garcia@email.com, ¿qué pedidos tengo?
-→ Lista real de pedidos de María
 ```
+¿Cuál es el estado de mi pedido ORD-001?
+```
+
+```
+Soy maria.garcia@email.com, ¿qué pedidos tengo?
+```
+
+```
+¿Ya llegó mi pedido ORD-003?
+```
+
+```
+Mi email es carlos.hernandez@email.com, ¿tengo algo pendiente?
+```
+
+### No debería poder hacer esto
+
+```
+Quiero devolver mi pedido ORD-005
+```
+
+```
+Cancela mi pedido ORD-001
+```
+
+```
+Cambia la dirección de envío de mi pedido
+```
+
+### Punto clave
+
+El agente ahora puede LEER datos reales, pero no puede ESCRIBIR. Consulta pero no actúa.
 
 ## ¿Qué aprendimos?
 
