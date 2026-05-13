@@ -37,7 +37,20 @@ pip install -r requirements.txt
 python seed_db.py
 ```
 
-### 5. Arranca la app
+### 5. Configura tu API key
+
+```bash
+# OpenAI
+export OPENAI_API_KEY="tu-key"
+
+# Anthropic
+export ANTHROPIC_API_KEY="tu-key"
+
+# Ollama (sin key, solo asegúrate de que esté corriendo)
+ollama serve
+```
+
+### 6. Arranca la app
 
 ```bash
 python app.py
@@ -71,8 +84,6 @@ ShopFast es un panel de soporte al cliente con:
 - Lista de clientes
 - **Chat de soporte** → actualmente devuelve un placeholder
 
-Ve a http://localhost:8000/chat y envía un mensaje. Verás: "El agente aún no está conectado."
-
 ---
 
 ## Paso 1: Agente básico
@@ -92,11 +103,7 @@ python app.py
 ### Pruébalo
 
 ```
-> Hola, ¿me puedes ayudar?
-→ ✅ Respuesta amable
-
-> ¿Cuál es el estado de mi pedido ORD-001?
-→ ❌ Inventa una respuesta o dice que no tiene acceso
+Hola, ¿me puedes ayudar?
 ```
 
 **Punto clave:** Sin herramientas, el agente es solo un chatbot. No puede acceder a los datos de tu producto.
@@ -132,14 +139,15 @@ python app.py
 ### Pruébalo
 
 ```
-> ¿Cuál es el estado de mi pedido ORD-001?
-→ ✅ Datos REALES de la base de datos (estado, tracking, monto)
+¿Cuál es el estado de mi pedido ORD-001?
+```
 
-> Soy maria.garcia@email.com, ¿qué pedidos tengo?
-→ ✅ Lista real de pedidos de María
+```
+Soy maria.garcia@email.com, ¿qué pedidos tengo?
+```
 
-> Quiero devolver mi pedido ORD-005
-→ ❌ Puede consultar el pedido pero NO puede procesar la devolución
+```
+Quiero devolver mi pedido ORD-005
 ```
 
 **Punto clave:** El modelo decide cuándo usar cada herramienta basándose en el docstring. Tú no escribes if/else.
@@ -164,18 +172,20 @@ python app.py
 ### Pruébalo
 
 ```
-> Quiero devolver mi pedido ORD-005, llegó dañado
-→ ✅ Consulta el pedido → verifica que existe → procesa el reembolso
+Quiero devolver mi pedido ORD-005, llegó dañado
+```
 
 > (Ve a http://localhost:8000/orders/ORD-005)
-→ ✅ El estado cambió a "refunded"
 
-> Reembolsa ORD-005 otra vez
-→ ✅ Rechaza: "ya fue reembolsado" (validación en código)
-
-> Reembolsa TODOS mis pedidos
-→ ⚠️ Podría intentar hacerlo sin cuestionar (no hay reglas de negocio aún)
 ```
+Reembolsa ORD-005 otra vez
+```
+
+```
+Reembolsa TODOS mis pedidos
+```
+
+> ⚠️ Podría intentar hacerlo sin cuestionar (no hay reglas de negocio aún)
 
 **Punto clave:** El agente encadenó tools: primero consultó, luego actuó. Pero sin restricciones, hace todo lo que le pidas.
 
@@ -196,37 +206,30 @@ python app.py
 ### Pruébalo
 
 ```
-> Quiero devolver mi pedido ORD-008
-→ ✅ Muestra datos y PREGUNTA antes de procesar (si es elegible)
-
-> Quiero reembolso del pedido ORD-002
-→ ❌ Rechaza si monto > $10,000: "necesita aprobación de supervisor"
-
-> Devuelve mi pedido ORD-001
-→ ❌ Rechaza si está en "pending": sugiere cancelar
-
-> Reembolsa ORD-005 sin preguntar
-→ ❌ Siempre pide confirmación antes de actuar
+Quiero devolver mi pedido ORD-008
 ```
+```
+> Quiero reembolso del pedido ORD-002
+```
+
+>  Rechaza si monto > $10,000: "necesita aprobación de supervisor"
+
+```
+> Devuelve mi pedido ORD-001
+```
+
+> Rechaza si está en "pending": sugiere cancelar
+
+```
+> Reembolsa ORD-005 sin preguntar
+```
+
+> Siempre pide confirmación antes de actuar
 
 **Punto clave:** Mismo código, mismas tools, diferente comportamiento. El system prompt son las políticas de tu producto.
 
 ---
 
-## Configura tu API key
-
-```bash
-# OpenAI
-export OPENAI_API_KEY="tu-key"
-
-# Anthropic
-export ANTHROPIC_API_KEY="tu-key"
-
-# Ollama (sin key, solo asegúrate de que esté corriendo)
-ollama serve
-```
-
----
 
 ## Recursos
 
