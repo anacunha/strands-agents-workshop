@@ -70,7 +70,7 @@ Cada paso es un branch. Cambia de branch para avanzar:
 | 1 | `git checkout step/01-basic-agent` | Agente conectado al chat, sin tools |
 | 2 | `git checkout step/02-read-tools` | Tools de consulta (pedidos, clientes) |
 | 3 | `git checkout step/03-write-tools` | Tool de acción (procesar reembolsos) |
-| 4 | `git checkout step/04-guardrails` | Reglas de negocio en el system prompt |
+| 4 | `git checkout step/04-guardrails` | Reglas de negocio (prompt engineering) |
 
 > Después de cambiar de branch, reinstala dependencias si es necesario: `pip install -r requirements.txt`
 
@@ -197,7 +197,7 @@ Reembolsa TODOS mis pedidos
 
 ---
 
-## Paso 4: Guardrails
+## Paso 4: Reglas de negocio (Prompt Engineering)
 
 ```bash
 git checkout step/04-guardrails
@@ -233,6 +233,16 @@ Quiero devolver mi pedido ORD-008
 > Siempre pide confirmación antes de actuar
 
 **Punto clave:** Mismo código, mismas tools, diferente comportamiento. El system prompt son las políticas de tu producto.
+
+### Nota: Prompt Engineering vs Guardrails
+
+Lo que hicimos aquí es **prompt engineering**: le damos instrucciones al modelo para que siga reglas de negocio. Funciona bien, pero el modelo *podría* ignorarlas con un prompt adversarial.
+
+Para producción, existen **guardrails reales** que actúan como un firewall a nivel de infraestructura y bloquean contenido de forma determinística. [Amazon Bedrock Guardrails](https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails.html?trk=3030e60a-17b3-4fdb-9862-d65f29e1a10c&sc_channel=el) se integra directamente con Strands Agents y permite filtrar toxicidad, PII, y temas prohibidos sin depender del modelo.
+
+![architecture-4](./assets/architecture-4.png)
+
+Más info: [Strands Guardrails](https://strandsagents.com/docs/user-guide/safety-security/guardrails/)
 
 ---
 
