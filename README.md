@@ -70,7 +70,7 @@ Cada paso es un branch. Cambia de branch para avanzar:
 | 1 | `git checkout step/01-basic-agent` | Agente conectado al chat, sin tools |
 | 2 | `git checkout step/02-read-tools` | Tools de consulta (pedidos, clientes) |
 | 3 | `git checkout step/03-write-tools` | Tool de acción (procesar reembolsos) |
-| 4 | `git checkout step/04-guardrails` | Reglas de negocio (prompt engineering) |
+| 4 | `git checkout step/04-business-rules` | Reglas de negocio (prompt engineering) |
 
 > Después de cambiar de branch, reinstala dependencias si es necesario: `pip install -r requirements.txt`
 
@@ -200,7 +200,7 @@ Reembolsa TODOS mis pedidos
 ## Paso 4: Reglas de negocio (Prompt Engineering)
 
 ```bash
-git checkout step/04-guardrails
+git checkout step/04-business-rules
 python seed_db.py
 python app.py
 ```
