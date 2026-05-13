@@ -28,15 +28,15 @@ El chat en /chat actualmente devuelve un placeholder. Vamos a conectar un agente
 
 ## Prompt 1: Crea el agente
 
-Ahora sí, pídele que implemente el agente:
+Ahora sí, pídele que implemente el agente. Usa el prompt que corresponda a tu provider:
 
----
+### Si usas OpenAI
 
 ```
 Crea un archivo shopfast/agent.py que configure un agente de Strands Agents.
 
 Requisitos:
-- Usa OpenAIModel de strands.models.openai con model_id="gpt-4o-mini"
+- Usa OpenAIModel de strands.models.openai (sin model_id, usa el default)
 - Define un system prompt que diga: "Eres el agente de soporte al cliente de ShopFast, una tienda online. Ayudas a los clientes con sus preguntas sobre pedidos, envíos y devoluciones. Sé amable, profesional y conciso."
 - Crea una instancia de Agent con el modelo y el system prompt
 - Usa callback_handler=None para evitar que el agente imprima a stdout
@@ -51,6 +51,58 @@ Luego modifica shopfast/app.py:
 - La respuesta del agente debe mostrarse como el mensaje del assistant en el chat
 
 Agrega strands-agents, strands-agents-tools y openai a requirements.txt
+
+La API key se lee de la variable de entorno OPENAI_API_KEY.
+```
+
+### Si usas Anthropic
+
+```
+Crea un archivo shopfast/agent.py que configure un agente de Strands Agents.
+
+Requisitos:
+- Usa AnthropicModel de strands.models.anthropic (sin model_id, usa el default)
+- Define un system prompt que diga: "Eres el agente de soporte al cliente de ShopFast, una tienda online. Ayudas a los clientes con sus preguntas sobre pedidos, envíos y devoluciones. Sé amable, profesional y conciso."
+- Crea una instancia de Agent con el modelo y el system prompt
+- Usa callback_handler=None para evitar que el agente imprima a stdout
+- Exporta una función invoke_agent(user_message: str, conversation_history: list[dict]) -> str que:
+  - Reciba el mensaje del usuario y el historial de conversación
+  - Envíe el mensaje al agente y retorne la respuesta como string
+  - Use el historial para mantener contexto entre mensajes
+  - Extraiga el texto de result.message["content"]
+
+Luego modifica shopfast/app.py:
+- En el endpoint POST /chat, reemplaza la respuesta placeholder por una llamada a invoke_agent() con el mensaje del usuario y el historial
+- La respuesta del agente debe mostrarse como el mensaje del assistant en el chat
+
+Agrega strands-agents, strands-agents-tools y anthropic a requirements.txt
+
+La API key se lee de la variable de entorno ANTHROPIC_API_KEY.
+```
+
+### Si usas Ollama (local, sin API key)
+
+```
+Crea un archivo shopfast/agent.py que configure un agente de Strands Agents.
+
+Requisitos:
+- Usa OllamaModel de strands.models.ollama con model_id="llama3.2:3b" y host="http://localhost:11434"
+- Define un system prompt que diga: "Eres el agente de soporte al cliente de ShopFast, una tienda online. Ayudas a los clientes con sus preguntas sobre pedidos, envíos y devoluciones. Sé amable, profesional y conciso."
+- Crea una instancia de Agent con el modelo y el system prompt
+- Usa callback_handler=None para evitar que el agente imprima a stdout
+- Exporta una función invoke_agent(user_message: str, conversation_history: list[dict]) -> str que:
+  - Reciba el mensaje del usuario y el historial de conversación
+  - Envíe el mensaje al agente y retorne la respuesta como string
+  - Use el historial para mantener contexto entre mensajes
+  - Extraiga el texto de result.message["content"]
+
+Luego modifica shopfast/app.py:
+- En el endpoint POST /chat, reemplaza la respuesta placeholder por una llamada a invoke_agent() con el mensaje del usuario y el historial
+- La respuesta del agente debe mostrarse como el mensaje del assistant en el chat
+
+Agrega strands-agents y strands-agents-tools a requirements.txt
+
+Asegúrate de que Ollama esté corriendo (ollama serve) y que el modelo esté descargado (ollama pull llama3.2:3b).
 ```
 
 ---
