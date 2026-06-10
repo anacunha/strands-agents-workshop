@@ -1,9 +1,14 @@
 """Agente de suporte da ShopFast usando Strands Agents."""
 
 from strands import Agent
-from strands.models.openai import OpenAIModel
+from strands.models.anthropic import AnthropicModel
 
-model = OpenAIModel(model_id="gpt-4o-mini")
+# A key é lida da variável de ambiente ANTHROPIC_API_KEY (ou OPENAI_API_KEY).
+model = AnthropicModel(model_id="claude-sonnet-4-6", max_tokens=1028)
+
+# Trocar de provider é só trocar o model (e o import):
+# from strands.models.openai import OpenAIModel
+# model = OpenAIModel(model_id="gpt-4o-mini")
 
 SYSTEM_PROMPT = """Você é o assistente do time de suporte da ShopFast, uma loja online.
 Você ajuda os atendentes a responder dúvidas sobre pedidos, envios e devoluções.
