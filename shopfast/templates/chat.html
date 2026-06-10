@@ -23,12 +23,12 @@
         {% endif %}
     </div>
 
-    <form method="post" action="/chat">
+    <form method="post" action="/chat" autocomplete="off">
         {% for msg in messages %}
         <input type="hidden" name="history" value="{{ msg.role }}:{{ msg.content }}">
         {% endfor %}
         <fieldset role="group">
-            <input type="text" name="message" placeholder="Escreva sua mensagem..." required autofocus>
+            <input type="text" name="message" placeholder="Escreva sua mensagem..." required autofocus autocomplete="off">
             <button type="submit">Enviar</button>
         </fieldset>
     </form>
