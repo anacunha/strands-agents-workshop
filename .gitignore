@@ -12,6 +12,10 @@ venv/
 # SQLite database
 shopfast/data/*.db
 
+# Arquivos copiados dos steps durante o workshop
+shopfast/agent.py
+shopfast/tools.py
+
 # IDE
 .idea/
 .vscode/
