@@ -74,7 +74,56 @@ def seed_customers(conn):
 
 
 def seed_orders(conn):
-    """Insere pedidos com dados variados."""
+    """Insere pedidos.
+
+    Os pedidos usados na demo (ORD-001, 002, 005, 008) são FIXOS, com status e
+    valor escolhidos a dedo para que os prompts do README disparem sempre a mesma
+    reação do agente. Os demais pedidos são aleatórios, apenas para encher o
+    dashboard (ruído de fundo). O `random.seed()` em main() mantém tudo estável
+    entre execuções.
+
+    Casos fixos (todos da Maria, CUST-001):
+    - ORD-001: pending          → Passo 4 rejeita (pedido pendente, sugerir cancelar)
+    - ORD-002: delivered, >10k  → Passo 4 rejeita (precisa de aprovação de supervisor)
+    - ORD-005: delivered, <10k  → Passos 2/3, o reembolso processado ao vivo
+    - ORD-008: delivered, <10k  → Passo 4, reembolso limpo e aprovado
+    """
+    now = datetime.now()
+    orders = []
+
+    # Pedidos FIXOS da demo (cliente: Maria, CUST-001)
+    # (id, customer_id, status, total, items)
+    fixed_orders = [
+        ("ORD-001", "CUST-001", "pending", [
+            {"name": "AirPods Pro", "quantity": 1, "price": 2499.00},
+        ]),
+        ("ORD-002", "CUST-001", "delivered", [
+            {"name": "MacBook Air M3", "quantity": 1, "price": 12999.00},
+        ]),
+        ("ORD-005", "CUST-001", "delivered", [
+            {"name": "Tênis Nike Air Max", "quantity": 1, "price": 899.00},
+        ]),
+        ("ORD-008", "CUST-001", "delivered", [
+            {"name": "Smart TV LG 55\"", "quantity": 1, "price": 3299.00},
+        ]),
+    ]
+
+    fixed_ids = {o[0] for o in fixed_orders}
+
+    for order_id, customer_id, status, items in fixed_orders:
+        total = sum(item["price"] * item["quantity"] for item in items)
+        tracking = None
+        if status in ("shipped", "delivered"):
+            tracking = f"BR{random.randint(100000000, 999999999)}BR"
+        created = now - timedelta(days=random.randint(1, 30), hours=random.randint(0, 23))
+        updated = created + timedelta(days=random.randint(0, 3))
+        orders.append((
+            order_id, customer_id, status, tracking, round(total, 2),
+            json.dumps(items, ensure_ascii=False),
+            created.isoformat(), updated.isoformat()
+        ))
+
+    # Pedidos ALEATÓRIOS (ruído de fundo, preenchem o dashboard)
     items_catalog = [
         {"name": "iPhone 15 Pro", "quantity": 1, "price": 10499.00},
         {"name": "MacBook Air M3", "quantity": 1, "price": 12999.00},
@@ -99,21 +148,23 @@ def seed_orders(conn):
     ]
 
     statuses = (
-        ["delivered"] * 15
+        ["delivered"] * 14
         + ["shipped"] * 5
-        + ["pending"] * 3
+        + ["pending"] * 2
         + ["returned"] * 1
         + ["refunded"] * 1
     )
     random.shuffle(statuses)
 
-    now = datetime.now()
-    orders = []
-
+    status_idx = 0
     for i in range(1, 26):
         order_id = f"ORD-{i:03d}"
+        if order_id in fixed_ids:
+            continue  # já criado acima
+
         customer_id = f"CUST-{random.randint(1, 10):03d}"
-        status = statuses[i - 1]
+        status = statuses[status_idx]
+        status_idx += 1
 
         num_items = random.randint(1, 3)
         selected_items = random.sample(items_catalog, num_items)
@@ -171,6 +222,10 @@ def seed_refunds(conn):
 
 def main():
     DB_PATH.parent.mkdir(parents=True, exist_ok=True)
+
+    # Seed fixa: garante que o banco seja idêntico a cada execução, para que os
+    # prompts ensaiados sempre batam com os dados (ruído de fundo incluído).
+    random.seed(42)
 
     conn = sqlite3.connect(DB_PATH)
     create_tables(conn)

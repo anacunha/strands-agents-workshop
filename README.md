@@ -149,7 +149,7 @@ Qual o status do pedido ORD-001?
 ```
 
 ```
-Quais os pedidos do cliente maria.garcia@email.com?
+Quais os pedidos do cliente maria.silva@email.com?
 ```
 
 ```
