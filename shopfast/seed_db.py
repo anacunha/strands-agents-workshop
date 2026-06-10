@@ -1,4 +1,4 @@
-"""Script para crear tablas y poblar la base de datos con datos mock."""
+"""Script para criar tabelas e popular o banco de dados com dados fictícios."""
 
 import sqlite3
 import json
@@ -10,7 +10,7 @@ DB_PATH = Path(__file__).parent / "data" / "shop.db"
 
 
 def create_tables(conn):
-    """Crea las tablas de la base de datos."""
+    """Cria as tabelas do banco de dados."""
     conn.executescript("""
         DROP TABLE IF EXISTS refunds;
         DROP TABLE IF EXISTS orders;
@@ -50,18 +50,18 @@ def create_tables(conn):
 
 
 def seed_customers(conn):
-    """Inserta clientes con nombres en español."""
+    """Insere clientes com nomes brasileiros."""
     customers = [
-        ("CUST-001", "María García López", "maria.garcia@email.com", "+52 55 1234 5678"),
-        ("CUST-002", "Carlos Hernández Ruiz", "carlos.hernandez@email.com", "+52 33 2345 6789"),
-        ("CUST-003", "Ana Martínez Flores", "ana.martinez@email.com", "+52 81 3456 7890"),
-        ("CUST-004", "José Rodríguez Sánchez", "jose.rodriguez@email.com", "+52 55 4567 8901"),
-        ("CUST-005", "Laura Pérez Morales", "laura.perez@email.com", "+52 33 5678 9012"),
-        ("CUST-006", "Miguel Ángel Torres", "miguel.torres@email.com", "+52 81 6789 0123"),
-        ("CUST-007", "Carmen Díaz Vargas", "carmen.diaz@email.com", "+52 55 7890 1234"),
-        ("CUST-008", "Roberto Jiménez Castro", "roberto.jimenez@email.com", "+52 33 8901 2345"),
-        ("CUST-009", "Patricia Moreno Luna", "patricia.moreno@email.com", "+52 81 9012 3456"),
-        ("CUST-010", "Fernando Ruiz Ortega", "fernando.ruiz@email.com", "+52 55 0123 4567"),
+        ("CUST-001", "Maria Silva Santos", "maria.silva@email.com", "+55 11 91234-5678"),
+        ("CUST-002", "Carlos Oliveira Souza", "carlos.oliveira@email.com", "+55 21 92345-6789"),
+        ("CUST-003", "Ana Pereira Costa", "ana.pereira@email.com", "+55 31 93456-7890"),
+        ("CUST-004", "José Rodrigues Lima", "jose.rodrigues@email.com", "+55 11 94567-8901"),
+        ("CUST-005", "Larissa Ferreira Alves", "larissa.ferreira@email.com", "+55 41 95678-9012"),
+        ("CUST-006", "Miguel Almeida Rocha", "miguel.almeida@email.com", "+55 51 96789-0123"),
+        ("CUST-007", "Camila Dias Carvalho", "camila.dias@email.com", "+55 21 97890-1234"),
+        ("CUST-008", "Rafael Gomes Ribeiro", "rafael.gomes@email.com", "+55 31 98901-2345"),
+        ("CUST-009", "Patrícia Moreira Nunes", "patricia.moreira@email.com", "+55 61 99012-3456"),
+        ("CUST-010", "Fernando Araújo Cardoso", "fernando.araujo@email.com", "+55 11 90123-4567"),
     ]
 
     now = datetime.now()
@@ -74,28 +74,28 @@ def seed_customers(conn):
 
 
 def seed_orders(conn):
-    """Inserta pedidos con datos variados."""
+    """Insere pedidos com dados variados."""
     items_catalog = [
-        {"nombre": "iPhone 15 Pro", "cantidad": 1, "precio": 22999.00},
-        {"nombre": "MacBook Air M3", "cantidad": 1, "precio": 28999.00},
-        {"nombre": "AirPods Pro", "cantidad": 1, "precio": 4999.00},
-        {"nombre": "Samsung Galaxy S24", "cantidad": 1, "precio": 18999.00},
-        {"nombre": "Tablet Samsung A9", "cantidad": 1, "precio": 6499.00},
-        {"nombre": "Camiseta Nike Dri-FIT", "cantidad": 2, "precio": 899.00},
-        {"nombre": "Jeans Levi's 501", "cantidad": 1, "precio": 1599.00},
-        {"nombre": "Sudadera Adidas", "cantidad": 1, "precio": 1299.00},
-        {"nombre": "Tenis Nike Air Max", "cantidad": 1, "precio": 2899.00},
-        {"nombre": "Chamarra Columbia", "cantidad": 1, "precio": 3499.00},
-        {"nombre": "Licuadora Vitamix", "cantidad": 1, "precio": 8999.00},
-        {"nombre": "Aspiradora Dyson V15", "cantidad": 1, "precio": 12999.00},
-        {"nombre": "Juego de sábanas King", "cantidad": 1, "precio": 1899.00},
-        {"nombre": "Cafetera Nespresso", "cantidad": 1, "precio": 3299.00},
-        {"nombre": "Smart TV LG 55\"", "cantidad": 1, "precio": 14999.00},
-        {"nombre": "Bocina Sonos One", "cantidad": 2, "precio": 4499.00},
-        {"nombre": "Kindle Paperwhite", "cantidad": 1, "precio": 3299.00},
-        {"nombre": "Mochila Herschel", "cantidad": 1, "precio": 1699.00},
-        {"nombre": "Reloj Casio G-Shock", "cantidad": 1, "precio": 2499.00},
-        {"nombre": "Audífonos Sony WH-1000XM5", "cantidad": 1, "precio": 6999.00},
+        {"nombre": "iPhone 15 Pro", "cantidad": 1, "precio": 10499.00},
+        {"nombre": "MacBook Air M3", "cantidad": 1, "precio": 12999.00},
+        {"nombre": "AirPods Pro", "cantidad": 1, "precio": 2499.00},
+        {"nombre": "Samsung Galaxy S24", "cantidad": 1, "precio": 5999.00},
+        {"nombre": "Tablet Samsung A9", "cantidad": 1, "precio": 1899.00},
+        {"nombre": "Camiseta Nike Dri-FIT", "cantidad": 2, "precio": 199.00},
+        {"nombre": "Calça Jeans Levi's 501", "cantidad": 1, "precio": 449.00},
+        {"nombre": "Moletom Adidas", "cantidad": 1, "precio": 399.00},
+        {"nombre": "Tênis Nike Air Max", "cantidad": 1, "precio": 899.00},
+        {"nombre": "Jaqueta Columbia", "cantidad": 1, "precio": 799.00},
+        {"nombre": "Liquidificador Vitamix", "cantidad": 1, "precio": 3499.00},
+        {"nombre": "Aspirador Dyson V15", "cantidad": 1, "precio": 4999.00},
+        {"nombre": "Jogo de lençóis King", "cantidad": 1, "precio": 499.00},
+        {"nombre": "Cafeteira Nespresso", "cantidad": 1, "precio": 999.00},
+        {"nombre": "Smart TV LG 55\"", "cantidad": 1, "precio": 3299.00},
+        {"nombre": "Caixa de som Sonos One", "cantidad": 2, "precio": 1799.00},
+        {"nombre": "Kindle Paperwhite", "cantidad": 1, "precio": 699.00},
+        {"nombre": "Mochila Herschel", "cantidad": 1, "precio": 449.00},
+        {"nombre": "Relógio Casio G-Shock", "cantidad": 1, "precio": 799.00},
+        {"nombre": "Fones Sony WH-1000XM5", "cantidad": 1, "precio": 2799.00},
     ]
 
     statuses = (
@@ -121,7 +121,7 @@ def seed_orders(conn):
 
         tracking = None
         if status in ("shipped", "delivered"):
-            tracking = f"MX{random.randint(100000000, 999999999)}BR"
+            tracking = f"BR{random.randint(100000000, 999999999)}BR"
 
         created = now - timedelta(days=random.randint(1, 30), hours=random.randint(0, 23))
         updated = created + timedelta(days=random.randint(0, 3))
@@ -137,7 +137,7 @@ def seed_orders(conn):
         orders,
     )
 
-    # Actualizar el conteo de pedidos por cliente
+    # Atualizar a contagem de pedidos por cliente
     conn.execute("""
         UPDATE customers SET total_orders = (
             SELECT COUNT(*) FROM orders WHERE orders.customer_id = customers.id
@@ -146,19 +146,19 @@ def seed_orders(conn):
 
 
 def seed_refunds(conn):
-    """Inserta reembolsos de ejemplo."""
+    """Insere reembolsos de exemplo."""
     now = datetime.now()
     refunds = [
         (
-            "REF-001", "ORD-003", "Producto llegó dañado", 4999.00, "approved",
+            "REF-001", "ORD-003", "Produto chegou danificado", 2499.00, "approved",
             (now - timedelta(days=5)).isoformat()
         ),
         (
-            "REF-002", "ORD-007", "No coincide con la descripción", 1599.00, "pending",
+            "REF-002", "ORD-007", "Não corresponde à descrição", 449.00, "pending",
             (now - timedelta(days=2)).isoformat()
         ),
         (
-            "REF-003", "ORD-012", "Cambio de opinión", 2899.00, "rejected",
+            "REF-003", "ORD-012", "Desistência da compra", 899.00, "rejected",
             (now - timedelta(days=8)).isoformat()
         ),
     ]
@@ -179,7 +179,7 @@ def main():
     seed_refunds(conn)
     conn.commit()
     conn.close()
-    print(f"Base de datos creada exitosamente en: {DB_PATH}")
+    print(f"Banco de dados criado com sucesso em: {DB_PATH}")
 
 
 if __name__ == "__main__":
