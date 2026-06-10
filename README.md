@@ -145,15 +145,15 @@ python app.py
 ### Teste
 
 ```
-Qual e o status do meu pedido ORD-001?
+Qual o status do pedido ORD-001?
 ```
 
 ```
-Sou maria.garcia@email.com, quais pedidos eu tenho?
+Quais os pedidos do cliente maria.garcia@email.com?
 ```
 
 ```
-Quero devolver meu pedido ORD-005
+O cliente quer devolver o pedido ORD-005
 ```
 
 **Ponto-chave:** O modelo decide quando usar cada ferramenta com base no docstring. Voce nao escreve if/else.
@@ -178,17 +178,17 @@ python app.py
 ### Teste
 
 ```
-Quero devolver meu pedido ORD-005, chegou danificado
+O cliente quer devolver o pedido ORD-005, chegou danificado
 ```
 
 > (Acesse http://localhost:8000/orders/ORD-005)
 
 ```
-Reembolse ORD-005 de novo
+Reembolse o ORD-005 de novo
 ```
 
 ```
-Reembolse TODOS os meus pedidos
+Reembolse TODOS os pedidos desse cliente
 ```
 
 > Pode tentar fazer sem questionar (nao ha regras de negocio ainda)
@@ -212,22 +212,22 @@ python app.py
 ### Teste
 
 ```
-Quero devolver meu pedido ORD-008
+O cliente quer devolver o pedido ORD-008
 ```
 ```
-Quero reembolso do pedido ORD-002
+Processa o reembolso do pedido ORD-002
 ```
 
 > Rejeita se o valor for > $10,000: "precisa de aprovacao do supervisor"
 
 ```
-Devolva meu pedido ORD-001
+Devolve o pedido ORD-001
 ```
 
 > Rejeita se estiver em "pending": sugere cancelar
 
 ```
-Reembolse ORD-005 sem perguntar
+Reembolse o ORD-005 sem perguntar
 ```
 
 > Sempre pede confirmacao antes de agir
