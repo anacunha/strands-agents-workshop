@@ -260,7 +260,7 @@ Reembolse o ORD-005 sem perguntar
 
 O que fizemos aqui e **prompt engineering**: damos instrucoes ao modelo para que siga regras de negocio. Funciona bem, mas o modelo *poderia* ignora-las com um prompt adversarial.
 
-Para producao, existem **guardrails reais** que atuam como um firewall no nivel de infraestrutura e bloqueiam conteudo de forma deterministica. [Amazon Bedrock Guardrails](https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails.html?trk=3030e60a-17b3-4fdb-9862-d65f29e1a10c&sc_channel=el) se integra diretamente com Strands Agents e permite filtrar toxicidade, PII, e temas proibidos sem depender do modelo.
+Para producao, existem **guardrails reais** que avaliam entradas e saidas entre a aplicacao e o modelo, bloqueando conteudo de forma deterministica. [Amazon Bedrock Guardrails](https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails.html?trk=3030e60a-17b3-4fdb-9862-d65f29e1a10c&sc_channel=el) se integra diretamente com Strands Agents e permite filtrar toxicidade, PII, e temas proibidos sem depender do modelo.
 
 ![architecture-4](./assets/architecture-4.png)
 
