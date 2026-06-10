@@ -1,12 +1,16 @@
 """Aplicação web de suporte ao cliente para ShopFast."""
 
-from fastapi import FastAPI, Request, Form
+from pathlib import Path
+
+from fastapi import FastAPI, Form, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from pathlib import Path
 
 import database
+
+# --- Passo 1: conecta o agente ---
+# from agent import invoke_agent
 
 app = FastAPI(title="ShopFast Suporte")
 
@@ -63,7 +67,7 @@ async def chat_page(request: Request):
 
 @app.post("/chat", response_class=HTMLResponse)
 async def chat_send(request: Request, message: str = Form(...)):
-    """Processa uma mensagem do chat de suporte (placeholder)."""
+    """Processa uma mensagem do chat de suporte."""
     messages = []
 
     # Reconstruir histórico a partir de campos ocultos
@@ -76,11 +80,13 @@ async def chat_send(request: Request, message: str = Form(...)):
     # Adicionar mensagem do usuário
     messages.append({"role": "user", "content": message})
 
-    # Resposta placeholder do agente
-    messages.append({
-        "role": "assistant",
-        "content": "O agente ainda não está conectado. Aqui será integrado o Strands Agents.",
-    })
+    # --- Etapa 0: sem agente ---
+    response = "O agente ainda não está conectado. Aqui será integrado o Strands Agents."
+
+    # --- Passo 1: conecta o agente ---
+    # response = invoke_agent(message, messages[:-1])
+
+    messages.append({"role": "assistant", "content": response})
 
     return templates.TemplateResponse(request, "chat.html", {
         "messages": messages,
