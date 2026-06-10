@@ -54,7 +54,11 @@ ollama serve
 
 ### 6. Inicie a app
 
+A app importa `agent.py` e `tools.py` de `shopfast/`. Copie o passo 0 (sem agente)
+para começar:
+
 ```bash
+cp ../steps/step-00-no-agent/*.py .
 python app.py
 ```
 
@@ -78,7 +82,7 @@ cp steps/step-02-read-tools/*.py shopfast/
 
 | Passo | Pasta | O que é adicionado |
 |-------|-------|-------------------|
-| 0 | `shopfast/` (base) | App base (ponto de partida) |
+| 0 | `steps/step-00-no-agent/` | App base, chat retorna resposta fixa (sem agente) |
 | 1 | `steps/step-01-basic-agent/` | Agente conectado ao chat, sem tools |
 | 2 | `steps/step-02-read-tools/` | Tools de consulta (pedidos, clientes) |
 | 3 | `steps/step-03-write-tools/` | Tool de ação (processar reembolsos) |
@@ -92,11 +96,17 @@ cp steps/step-02-read-tools/*.py shopfast/
 
 ![architecture-1](./assets/architecture-1.png)
 
+```bash
+cp steps/step-00-no-agent/*.py shopfast/
+pip install -r requirements.txt
+python app.py
+```
+
 ShopFast e um painel usado pelo time de suporte, com:
 - Dashboard com metricas
 - Lista de pedidos e detalhes
 - Lista de clientes
-- **Chat de suporte** → atualmente retorna um placeholder
+- **Chat de suporte** → o `app.py` chama `invoke_agent`, que no passo 0 retorna uma resposta fixa (placeholder)
 
 ---
 

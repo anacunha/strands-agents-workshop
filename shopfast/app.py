@@ -11,8 +11,7 @@ from markupsafe import Markup
 
 import database
 
-# --- Passo 1: conecta o agente ---
-# from agent import invoke_agent
+from agent import invoke_agent
 
 app = FastAPI(title="ShopFast Suporte")
 
@@ -91,11 +90,8 @@ async def chat_send(request: Request, message: str = Form(...)):
     # Adicionar mensagem do usuário
     messages.append({"role": "user", "content": message})
 
-    # --- Etapa 0: sem agente ---
-    response = "O agente ainda não está conectado. Aqui será integrado o Strands Agents."
-
-    # --- Passo 1: conecta o agente ---
-    # response = invoke_agent(message, messages[:-1])
+    # O agente é definido em shopfast/agent.py.
+    response = invoke_agent(message, messages[:-1])
 
     messages.append({"role": "assistant", "content": response})
 
