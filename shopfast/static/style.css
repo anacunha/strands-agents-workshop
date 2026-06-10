@@ -63,6 +63,45 @@
     margin: 0;
 }
 
+/* Conteúdo markdown renderizado do agente */
+.chat-content > *:first-child {
+    margin-top: 0;
+}
+
+.chat-content > *:last-child {
+    margin-bottom: 0;
+}
+
+.chat-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0.5rem 0;
+}
+
+.chat-content th,
+.chat-content td {
+    border: 1px solid #d0d0d0;
+    padding: 0.4rem 0.6rem;
+    text-align: left;
+}
+
+.chat-content th {
+    background-color: #ececec;
+}
+
+.chat-content ul,
+.chat-content ol {
+    margin: 0.5rem 0;
+    padding-left: 1.5rem;
+}
+
+.chat-content code {
+    background-color: #ececec;
+    padding: 0.1rem 0.3rem;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
 .chat-user {
     background-color: #e3f2fd;
     margin-left: 2rem;

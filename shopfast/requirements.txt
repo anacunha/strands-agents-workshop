@@ -1,4 +1,6 @@
 fastapi
 uvicorn[standard]
 jinja2
+markdown
 python-multipart
+strands-agents[anthropic]

@@ -11,7 +11,11 @@
             {% for msg in messages %}
             <div class="chat-message chat-{{ msg.role }}">
                 <strong>{{ "Você" if msg.role == "user" else "Agente" }}:</strong>
+                {% if msg.role == "assistant" %}
+                <div class="chat-content">{{ msg.content | markdown }}</div>
+                {% else %}
                 <p>{{ msg.content }}</p>
+                {% endif %}
             </div>
             {% endfor %}
         {% else %}

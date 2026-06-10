@@ -2,10 +2,12 @@
 
 from pathlib import Path
 
+import markdown as md
 from fastapi import FastAPI, Form, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from markupsafe import Markup
 
 import database
 
@@ -17,6 +19,15 @@ app = FastAPI(title="ShopFast Suporte")
 # Configurar arquivos estáticos e templates
 app.mount("/static", StaticFiles(directory=Path(__file__).parent / "static"), name="static")
 templates = Jinja2Templates(directory=Path(__file__).parent / "templates")
+
+
+def render_markdown(text: str) -> Markup:
+    """Converte texto markdown (tabelas, listas, quebras de linha) em HTML seguro."""
+    html = md.markdown(text or "", extensions=["tables", "nl2br", "sane_lists"])
+    return Markup(html)
+
+
+templates.env.filters["markdown"] = render_markdown
 
 
 @app.get("/", response_class=HTMLResponse)
