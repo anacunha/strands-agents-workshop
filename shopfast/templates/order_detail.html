@@ -37,9 +37,9 @@
     <tbody>
         {% for item in order["items"] %}
         <tr>
-            <td>{{ item.nombre }}</td>
-            <td>{{ item.cantidad }}</td>
-            <td>${{ "%.2f"|format(item.precio) }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>${{ "%.2f"|format(item.price) }}</td>
         </tr>
         {% endfor %}
     </tbody>

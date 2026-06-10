@@ -76,26 +76,26 @@ def seed_customers(conn):
 def seed_orders(conn):
     """Insere pedidos com dados variados."""
     items_catalog = [
-        {"nombre": "iPhone 15 Pro", "cantidad": 1, "precio": 10499.00},
-        {"nombre": "MacBook Air M3", "cantidad": 1, "precio": 12999.00},
-        {"nombre": "AirPods Pro", "cantidad": 1, "precio": 2499.00},
-        {"nombre": "Samsung Galaxy S24", "cantidad": 1, "precio": 5999.00},
-        {"nombre": "Tablet Samsung A9", "cantidad": 1, "precio": 1899.00},
-        {"nombre": "Camiseta Nike Dri-FIT", "cantidad": 2, "precio": 199.00},
-        {"nombre": "Calça Jeans Levi's 501", "cantidad": 1, "precio": 449.00},
-        {"nombre": "Moletom Adidas", "cantidad": 1, "precio": 399.00},
-        {"nombre": "Tênis Nike Air Max", "cantidad": 1, "precio": 899.00},
-        {"nombre": "Jaqueta Columbia", "cantidad": 1, "precio": 799.00},
-        {"nombre": "Liquidificador Vitamix", "cantidad": 1, "precio": 3499.00},
-        {"nombre": "Aspirador Dyson V15", "cantidad": 1, "precio": 4999.00},
-        {"nombre": "Jogo de lençóis King", "cantidad": 1, "precio": 499.00},
-        {"nombre": "Cafeteira Nespresso", "cantidad": 1, "precio": 999.00},
-        {"nombre": "Smart TV LG 55\"", "cantidad": 1, "precio": 3299.00},
-        {"nombre": "Caixa de som Sonos One", "cantidad": 2, "precio": 1799.00},
-        {"nombre": "Kindle Paperwhite", "cantidad": 1, "precio": 699.00},
-        {"nombre": "Mochila Herschel", "cantidad": 1, "precio": 449.00},
-        {"nombre": "Relógio Casio G-Shock", "cantidad": 1, "precio": 799.00},
-        {"nombre": "Fones Sony WH-1000XM5", "cantidad": 1, "precio": 2799.00},
+        {"name": "iPhone 15 Pro", "quantity": 1, "price": 10499.00},
+        {"name": "MacBook Air M3", "quantity": 1, "price": 12999.00},
+        {"name": "AirPods Pro", "quantity": 1, "price": 2499.00},
+        {"name": "Samsung Galaxy S24", "quantity": 1, "price": 5999.00},
+        {"name": "Tablet Samsung A9", "quantity": 1, "price": 1899.00},
+        {"name": "Camiseta Nike Dri-FIT", "quantity": 2, "price": 199.00},
+        {"name": "Calça Jeans Levi's 501", "quantity": 1, "price": 449.00},
+        {"name": "Moletom Adidas", "quantity": 1, "price": 399.00},
+        {"name": "Tênis Nike Air Max", "quantity": 1, "price": 899.00},
+        {"name": "Jaqueta Columbia", "quantity": 1, "price": 799.00},
+        {"name": "Liquidificador Vitamix", "quantity": 1, "price": 3499.00},
+        {"name": "Aspirador Dyson V15", "quantity": 1, "price": 4999.00},
+        {"name": "Jogo de lençóis King", "quantity": 1, "price": 499.00},
+        {"name": "Cafeteira Nespresso", "quantity": 1, "price": 999.00},
+        {"name": "Smart TV LG 55\"", "quantity": 1, "price": 3299.00},
+        {"name": "Caixa de som Sonos One", "quantity": 2, "price": 1799.00},
+        {"name": "Kindle Paperwhite", "quantity": 1, "price": 699.00},
+        {"name": "Mochila Herschel", "quantity": 1, "price": 449.00},
+        {"name": "Relógio Casio G-Shock", "quantity": 1, "price": 799.00},
+        {"name": "Fones Sony WH-1000XM5", "quantity": 1, "price": 2799.00},
     ]
 
     statuses = (
@@ -117,7 +117,7 @@ def seed_orders(conn):
 
         num_items = random.randint(1, 3)
         selected_items = random.sample(items_catalog, num_items)
-        total = sum(item["precio"] * item["cantidad"] for item in selected_items)
+        total = sum(item["price"] * item["quantity"] for item in selected_items)
 
         tracking = None
         if status in ("shipped", "delivered"):
