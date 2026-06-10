@@ -7,31 +7,31 @@
 
 <div class="grid">
     <article>
-        <header>Información del Pedido</header>
-        <p><strong>Estado:</strong> <span class="badge badge-{{ order.status }}">{{ order.status }}</span></p>
+        <header>Informações do Pedido</header>
+        <p><strong>Status:</strong> <span class="badge badge-{{ order.status }}">{{ order.status }}</span></p>
         <p><strong>Total:</strong> ${{ "%.2f"|format(order.total) }}</p>
         {% if order.tracking_number %}
-        <p><strong>Número de rastreo:</strong> {{ order.tracking_number }}</p>
+        <p><strong>Número de rastreio:</strong> {{ order.tracking_number }}</p>
         {% endif %}
-        <p><strong>Creado:</strong> {{ order.created_at[:10] }}</p>
-        <p><strong>Actualizado:</strong> {{ order.updated_at[:10] }}</p>
+        <p><strong>Criado em:</strong> {{ order.created_at[:10] }}</p>
+        <p><strong>Atualizado em:</strong> {{ order.updated_at[:10] }}</p>
     </article>
 
     <article>
-        <header>Información del Cliente</header>
-        <p><strong>Nombre:</strong> {{ order.customer_name }}</p>
+        <header>Informações do Cliente</header>
+        <p><strong>Nome:</strong> {{ order.customer_name }}</p>
         <p><strong>Email:</strong> {{ order.customer_email }}</p>
-        <p><strong>Teléfono:</strong> {{ order.customer_phone }}</p>
+        <p><strong>Telefone:</strong> {{ order.customer_phone }}</p>
     </article>
 </div>
 
-<h2>Artículos</h2>
+<h2>Itens</h2>
 <table>
     <thead>
         <tr>
-            <th>Producto</th>
-            <th>Cantidad</th>
-            <th>Precio</th>
+            <th>Produto</th>
+            <th>Quantidade</th>
+            <th>Preço</th>
         </tr>
     </thead>
     <tbody>
@@ -45,5 +45,5 @@
     </tbody>
 </table>
 
-<a href="/orders" role="button" class="outline">&larr; Volver a pedidos</a>
+<a href="/orders" role="button" class="outline">&larr; Voltar para pedidos</a>
 {% endblock %}

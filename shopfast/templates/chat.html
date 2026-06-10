@@ -1,21 +1,21 @@
 {% extends "base.html" %}
 
-{% block title %}Chat de Soporte{% endblock %}
+{% block title %}Chat de Suporte{% endblock %}
 
 {% block content %}
-<h1>Chat de Soporte</h1>
+<h1>Chat de Suporte</h1>
 
 <article class="chat-container">
     <div class="chat-messages">
         {% if messages %}
             {% for msg in messages %}
             <div class="chat-message chat-{{ msg.role }}">
-                <strong>{{ "Tú" if msg.role == "user" else "Agente" }}:</strong>
+                <strong>{{ "Você" if msg.role == "user" else "Agente" }}:</strong>
                 <p>{{ msg.content }}</p>
             </div>
             {% endfor %}
         {% else %}
-            <p class="chat-empty">Escribe un mensaje para iniciar la conversación con el agente de soporte.</p>
+            <p class="chat-empty">Escreva uma mensagem para iniciar a conversa com o agente de suporte.</p>
         {% endif %}
     </div>
 
@@ -24,7 +24,7 @@
         <input type="hidden" name="history" value="{{ msg.role }}:{{ msg.content }}">
         {% endfor %}
         <fieldset role="group">
-            <input type="text" name="message" placeholder="Escribe tu mensaje..." required autofocus>
+            <input type="text" name="message" placeholder="Escreva sua mensagem..." required autofocus>
             <button type="submit">Enviar</button>
         </fieldset>
     </form>
