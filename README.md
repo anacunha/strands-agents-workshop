@@ -1,6 +1,8 @@
 # Workshop: Agentes de IA como feature do seu produto
 
-Construa um agente de suporte ao cliente com ferramentas reais usando Strands Agents.
+Construa um agente de suporte com ferramentas reais usando Strands Agents. O agente
+é o assistente do time de suporte: ajuda os atendentes a consultar pedidos e processar
+reembolsos dentro do painel da ShopFast.
 
 ## Pre-requisitos
 
@@ -62,17 +64,27 @@ Abra http://localhost:8000
 
 ## Passos do workshop
 
-Cada passo e um branch. Troque de branch para avancar:
+O código de cada passo está numa pasta em [`steps/`](./steps). A app **sempre roda
+a partir de `shopfast/`** — é de lá que ela importa `agent.py` e `tools.py`. Para
+avançar de um passo, copie os arquivos daquele passo para dentro de `shopfast/`:
 
-| Passo | Comando | O que e adicionado |
-|-------|---------|-------------------|
-| 0 | `main` | App base (ponto de partida) |
-| 1 | `git checkout step/01-basic-agent` | Agente conectado ao chat, sem tools |
-| 2 | `git checkout step/02-read-tools` | Tools de consulta (pedidos, clientes) |
-| 3 | `git checkout step/03-write-tools` | Tool de acao (processar reembolsos) |
-| 4 | `git checkout step/04-business-rules` | Regras de negocio (prompt engineering) |
+```bash
+# exemplo: ativar o passo 2
+cp steps/step-02-read-tools/*.py shopfast/
+```
 
-> Depois de trocar de branch, reinstale as dependencias se necessario: `pip install -r requirements.txt`
+> Dica: na masterclass o código é digitado ao vivo direto em `shopfast/`. As pastas
+> em `steps/` servem de referência (e de backup, se algo travar).
+
+| Passo | Pasta | O que é adicionado |
+|-------|-------|-------------------|
+| 0 | `shopfast/` (base) | App base (ponto de partida) |
+| 1 | `steps/step-01-basic-agent/` | Agente conectado ao chat, sem tools |
+| 2 | `steps/step-02-read-tools/` | Tools de consulta (pedidos, clientes) |
+| 3 | `steps/step-03-write-tools/` | Tool de ação (processar reembolsos) |
+| 4 | `steps/step-04-business-rules/` | Regras de negócio (prompt engineering) |
+
+> Depois de copiar os arquivos, reinstale as dependências se necessário: `pip install -r requirements.txt`
 
 ---
 
@@ -80,7 +92,7 @@ Cada passo e um branch. Troque de branch para avancar:
 
 ![architecture-1](./assets/architecture-1.png)
 
-ShopFast e um painel de suporte ao cliente com:
+ShopFast e um painel usado pelo time de suporte, com:
 - Dashboard com metricas
 - Lista de pedidos e detalhes
 - Lista de clientes
@@ -93,7 +105,7 @@ ShopFast e um painel de suporte ao cliente com:
 ![architecture-2](./assets/architecture-2.png)
 
 ```bash
-git checkout step/01-basic-agent
+cp steps/step-01-basic-agent/*.py shopfast/
 pip install -r requirements.txt
 python app.py
 ```
@@ -133,7 +145,7 @@ Providers suportados: [Strands Model Providers](https://strandsagents.com/docs/u
 ![architecture-3](./assets/architecture-3.png)
 
 ```bash
-git checkout step/02-read-tools
+cp steps/step-02-read-tools/*.py shopfast/
 python app.py
 ```
 
@@ -163,7 +175,7 @@ O cliente quer devolver o pedido ORD-005
 ## Passo 3: Tool de acao
 
 ```bash
-git checkout step/03-write-tools
+cp steps/step-03-write-tools/*.py shopfast/
 python seed_db.py
 python app.py
 ```
@@ -200,7 +212,7 @@ Reembolse TODOS os pedidos desse cliente
 ## Passo 4: Regras de negocio (Prompt Engineering)
 
 ```bash
-git checkout step/04-business-rules
+cp steps/step-04-business-rules/*.py shopfast/
 python seed_db.py
 python app.py
 ```
@@ -218,7 +230,7 @@ O cliente quer devolver o pedido ORD-008
 Processa o reembolso do pedido ORD-002
 ```
 
-> Rejeita se o valor for > $10,000: "precisa de aprovacao do supervisor"
+> Rejeita se o valor for > R$10.000: "precisa de aprovacao do supervisor"
 
 ```
 Devolve o pedido ORD-001
